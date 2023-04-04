@@ -1,5 +1,3 @@
-"use strict"
-
 // Проверка длины строки
 const stringLength = (string, length) => string.length <= length;
 
@@ -19,3 +17,8 @@ const fillString = (string, minLength, filler) => {
   }
   return string;
 };
+
+stringLength('Это строка', 12);
+isPalindrome('Не гни папин ген');
+extractDigits('Проблема 2000');
+fillString('Это строка', 16, 'абвгд');
