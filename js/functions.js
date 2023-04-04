@@ -1,5 +1,7 @@
+"use strict"
+
 // Проверка длины строки
-const stringLength = (string, number) => string.length <= number;
+const stringLength = (string, length) => string.length <= length;
 
 // Проверка, является ли строка палиндромом
 const isPalindrome = (string) => {
