@@ -44,22 +44,24 @@ const getRandomInteger = (a, b) => {
 // Случайный элемент массива
 const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
 
-
 // Уникальные значения
-const generateUniqValue = (arr, minElement, maxElement) => {
-  let value = getRandomInteger(minElement, maxElement);
-  if (arr.length >= maxElement) {
-    return null;
-  }
-  while (arr.includes(value)) {
-    value = getRandomInteger(minElement, maxElement);
-  }
-  arr.push(value);
-  return value;
-};
+function generateUniqValue (min, max) {
+  const previousValues = [];
+  return function () {
+    let currentValue = getRandomInteger(min, max);
+    if (previousValues.length >= (max - min + 1)) {
+      return null;
+    }
+    while (previousValues.includes(currentValue)) {
+      currentValue = getRandomInteger(min, max);
+    }
+    previousValues.push(currentValue);
+    return currentValue;
+  };
+}
 
 // Объект - комментарий
-const createComments = () => ({
+const createComment = () => ({
   id: generateUniqValue([], MIN_COMMENTS_ID_COUNT, MAX_COMMENTS_ID_COUNT),
   avatar: `img/avatar-${generateUniqValue([], 1, 6)}.svg`,
   message: getRandomArrayElement(COMMENTS),
@@ -72,10 +74,9 @@ const createPhotoDescription = () => ({
   url: `photos/${generateUniqValue([], MIN_URL_COUNT, MAX_URL_COUNT)}.jpg`,
   description: getRandomArrayElement(DESCRIPTIONS),
   likes: generateUniqValue([], MIN_LIKES_COUNT, MAX_LIKES_COUNT),
-  comments: Array.from({ length: COMMENT_COUNT }, createComments),
+  comments: Array.from({ length: COMMENT_COUNT }, createComment),
 });
 
 // Массив объектов - описаний фотографии
-const PhotoDescription = () => Array.from({ length: PHOTO_COUNT }, createPhotoDescription);
-PhotoDescription();
-
+const getSimilarPhotoDescription = () => Array.from({ length: PHOTO_COUNT }, createPhotoDescription);
+getSimilarPhotoDescription();
